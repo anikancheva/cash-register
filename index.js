@@ -4,7 +4,7 @@ function validate(e) {
     e.preventDefault();
     let [totalInputField, providedInputField] = document.getElementsByTagName('input');
 
-    let priceRegex = new RegExp(/^(0\.[0-9]{1,2})?([1-9]+[0-9]*(,[0-9]{3})*)(\.[0-9]{1,2})?$/gm);
+    let priceRegex = new RegExp(/^(0\.[0-9]{1,2})$|^([1-9]+[0-9]*(,[0-9]{3})*)(\.[0-9]{1,2})?$/gm);
     let total = totalInputField.value;
     total = total.replaceAll(/\s+/g, '');
     let provided = providedInputField.value;
