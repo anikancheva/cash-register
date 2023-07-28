@@ -52,3 +52,28 @@ input {
     visibility: hidden;
     color: var(--error-highlight);
 }
+
+table,
+th,
+td {
+    border: 1px solid var(--main-color);
+    border-collapse: collapse;
+    padding: 5px;
+    width: 30%;
+    margin: auto;
+}
+
+#changeText {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0.5em;
+}
+
+#change {
+    display: inline-block;
+    font-weight: bold;
+}
+
+#change::before {
+    content: "$";
+}

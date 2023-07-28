@@ -4,7 +4,7 @@ function validate(e) {
     e.preventDefault();
     let [totalInputField, providedInputField] = document.getElementsByTagName('input');
 
-    let priceRegex = new RegExp(/^[1-9]+[0-9]*(,[0-9]{3})*(\.[0-9]{1,2})?$/gm);
+    let priceRegex = new RegExp(/^(0\.[0-9]{1,2})?([1-9]+[0-9]*(,[0-9]{3})*)(\.[0-9]{1,2})?$/gm);
     let total = totalInputField.value;
     total = total.replaceAll(/\s+/g, '');
     let provided = providedInputField.value;
@@ -36,7 +36,6 @@ function validate(e) {
     if (validTotal && validProvided) {
         getResult(total, provided);
     }
-
 }
 
 function getResult(total, provided) {
@@ -59,7 +58,20 @@ function getResult(total, provided) {
 }
 
 function showResult(data) {
-    console.log(data['change']);
-    console.log(data['bills']);
-    console.log(data['coins']);
+    let change = data['change'];
+    let bills = data['bills'];
+    let coins = data['coins'];
+    let changeP = document.getElementById('change');
+    changeP.textContent = change.toFixed(2);
+    if (change > 0) {
+        let tds = document.getElementsByTagName('td');
+        let i = tds.length - 1;
+        for (let val in coins) {
+            tds[i--].textContent = coins[val];
+        }
+        for (let val in bills) {
+            tds[i--].textContent = bills[val];
+        }
+        document.getElementById('denominations').removeAttribute('hidden');
+    }
 }

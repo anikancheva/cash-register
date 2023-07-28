@@ -20,7 +20,7 @@ function getResult($total, $provided): array
     ];
 
     $change = (float) $provided - (float) $total;
-    $resultArray["change"] = number_format($change, 2, ".");
+    $resultArray["change"] = $change;
     if ($change <= 0) {
         return $resultArray;
     }
