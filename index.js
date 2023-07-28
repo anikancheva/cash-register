@@ -2,34 +2,13 @@ document.querySelector('form').addEventListener('submit', validate);
 
 function validate(e) {
     e.preventDefault();
-    let [total, provided] = document.getElementsByTagName('input');
+    let [totalInputField, providedInputField] = document.getElementsByTagName('input');
 
-    if (!checkFields(total, provided)) {
-        return;
-    }
-
-    fetch('http://localhost:80/cash-register/calculate.php', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ 'total': total.value, 'provided': provided.value })
-    }).then(res => {
-        if (res.status != 200) {
-            return;
-        }
-
-        return res.json();
-    }).then(data => {
-        if (data != undefined) {
-            showResult(data);
-        }
-    })
-
-}
-
-function checkFields(totalInputField, providedInputField) {
-    let priceRegex = new RegExp(/^([0-9]*,?[0-9]*)*.?[0-9]{0,2}$/gm);
+    let priceRegex = new RegExp(/^[1-9]+[0-9]*(,[0-9]{3})*(\.[0-9]{1,2})?$/gm);
     let total = totalInputField.value;
+    total = total.replaceAll(/\s+/g, '');
     let provided = providedInputField.value;
+    provided = provided.replaceAll(/\s+/g, '');
 
     let validTotal = false;
     let validProvided = false;
@@ -47,7 +26,36 @@ function checkFields(totalInputField, providedInputField) {
         validProvided = true;
     }
 
-    return validTotal && validProvided;
+    let errorMsg = document.getElementById('errMsg');
+    if (!validTotal || !validProvided) {
+        errorMsg.style.visibility = 'visible';
+    } else {
+        errorMsg.style.visibility = 'hidden';
+    }
+
+    if (validTotal && validProvided) {
+        getResult(total, provided);
+    }
+
+}
+
+function getResult(total, provided) {
+    fetch('http://localhost:80/cash-register/calculate.php', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ total, provided })
+    }).then(res => {
+        if (res.status != 200) {
+            console.log(res.status);
+            return;
+        }
+
+        return res.json();
+    }).then(data => {
+        if (data != undefined) {
+            showResult(data);
+        }
+    })
 }
 
 function showResult(data) {

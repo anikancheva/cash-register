@@ -1,8 +1,8 @@
 :root {
-    --bckg-color: lightskyblue;
-    --main-color: brown;
-    --error-bckg: rgb(249, 142, 142);
-    --error-border: rgb(193, 2, 2);
+    --bckg-color: rgb(171, 220, 251);
+    --main-color: rgb(135, 14, 14);
+    --error-bckg: rgb(249, 173, 173);
+    --error-highlight: rgb(210, 5, 5);
 }
 
 body {
@@ -43,7 +43,12 @@ input {
 }
 
 .error {
-    border: 3px solid var(--error-border);
+    border: 3px solid var(--error-highlight);
     border-radius: 3px;
     background-color: var(--error-bckg)
+}
+
+#errMsg {
+    visibility: hidden;
+    color: var(--error-highlight);
 }
