@@ -73,5 +73,7 @@ function showResult(data) {
             tds[i--].textContent = bills[val];
         }
         document.getElementById('denominations').removeAttribute('hidden');
+    }else {
+        document.getElementById('denominations').setAttribute('hidden', true);
     }
 }
